@@ -6,11 +6,17 @@ use yazi_shared::{Condition, fs::File, theme::{Color, Icon, Style}};
 
 use crate::{Pattern, Preset};
 
+// 定义一个Icons结构体，包含globs、dirs、files、exts和conds五个成员变量
 pub struct Icons {
+	// 存储模式与图标的向量
 	globs: Vec<(Pattern, Icon)>,
+	// 存储目录与图标的哈希表
 	dirs:  HashMap<String, Icon>,
+	// 存储文件与图标的哈希表
 	files: HashMap<String, Icon>,
+	// 存储扩展名与图标的哈希表
 	exts:  HashMap<String, Icon>,
+	// 定义一个向量，其中包含条件（Condition）和图标（Icon）的元组
 	conds: Vec<(Condition, Icon)>,
 }
 
@@ -24,18 +30,31 @@ impl Icons {
 			return Some(i);
 		}
 
+		// 定义一个闭包，用于判断文件类型
 		let f = |s: &str| match s {
+			// 如果字符串为"dir"，则判断文件是否为目录
 			"dir" => file.is_dir(),
+			// 如果字符串为"hidden"，则判断文件是否为隐藏文件
 			"hidden" => file.is_hidden(),
+			// 如果字符串为"link"，则判断文件是否为链接
 			"link" => file.is_link(),
+			// 如果字符串为"orphan"，则判断文件是否为孤立文件
 			"orphan" => file.is_orphan(),
+			// 如果字符串为"dummy"，则判断文件是否为虚拟文件
 			"dummy" => file.is_dummy(),
+			// 如果字符串为"block"，则判断文件是否为块设备文件
 			"block" => file.is_block(),
+			// 如果字符串为"char"，则判断文件是否为字符设备文件
 			"char" => file.is_char(),
+			// 如果字符串为"fifo"，则判断文件是否为命名管道文件
 			"fifo" => file.is_fifo(),
+			// 如果字符串为"sock"，则判断文件是否为套接字文件
 			"sock" => file.is_sock(),
+			// 如果字符串为"exec"，则判断文件是否为可执行文件
 			"exec" => file.is_exec(),
+			// 如果字符串为"sticky"，则判断文件是否为粘滞位文件
 			"sticky" => file.is_sticky(),
+			// 如果字符串不匹配以上任何一种情况，则返回false
 			_ => false,
 		};
 		self.conds.iter().find(|(c, _)| c.eval(f) == Some(true)).map(|(_, i)| i)

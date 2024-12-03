@@ -33,7 +33,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 	for sh in [Shell::Bash, Shell::Fish, Shell::Zsh, Shell::Elvish, Shell::PowerShell] {
 		generate_to(sh, cmd, bin, out)?;
 	}
-
+	// 为指定的命令行工具生成Nushell和Fig的自动补全脚本
 	generate_to(clap_complete_nushell::Nushell, cmd, bin, out)?;
 	generate_to(clap_complete_fig::Fig, cmd, bin, out)?;
 

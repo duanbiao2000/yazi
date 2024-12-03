@@ -9,23 +9,37 @@ use super::{Filetype, Flavor, Icons};
 
 #[derive(Deserialize, Serialize)]
 pub struct Theme {
+	// 主题的口味
 	pub flavor:     Flavor,
+	// 管理器
 	pub manager:    Manager,
+	// 模式
 	mode:           Mode,
+	// 状态
 	status:         Status,
+	// 输入
 	pub input:      Input,
+	// 确认
 	pub confirm:    Confirm,
+	// 选择
 	pub pick:       Pick,
+	// 完成
 	pub completion: Completion,
+	// 任务
 	pub tasks:      Tasks,
+	// 哪个
 	pub which:      Which,
+	// 帮助
 	pub help:       Help,
+	// 通知
 	pub notify:     Notify,
 
 	// File-specific styles
 	#[serde(rename = "filetype", deserialize_with = "Filetype::deserialize", skip_serializing)]
+	// 将filetypes字段序列化为"filetype"，使用Filetype::deserialize进行反序列化，不进行序列化
 	pub filetypes: Vec<Filetype>,
 	#[serde(rename = "icon", skip_serializing)]
+	// 将icons字段序列化为"icon"，不进行序列化
 	pub icons:     Icons,
 }
 
